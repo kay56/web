@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>伪元素动画与转换</title>
+    <meta id="viewport" name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <style>
+        body { background-color: #fcf6f0; font-family: punctuation, PingFangSC-Regular, "Microsoft YaHei", "微软雅黑"; }
+        * { margin: 0; padding: 0; }
+        *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+        .title { padding: 2em 0; text-align: center; font-size: 1.4em; color: #c4c4c4; text-shadow: 1px 1px 0 rgba(255, 255, 255, .4); }
+        .b { font-size: 1.8em; margin-bottom: .4em; font-weight: normal; }
+        .circle { background: rgb(255, 255, 255); border-radius: 100%; cursor: pointer; position: relative; margin: 0 auto; width: 260px; height: 260px; overflow: hidden; -webkit-transform: translateZ(0); -moz-transform: translateZ(0); transform: translateZ(0); }
+        .circle:before, .circle:after { border-radius: 100%; content: ""; position: absolute; top: 0; left: 0; width: inherit; height: inherit; box-shadow: inset 10.6em 0 0 rgba(30, 140, 209, 0.2), inset 0 10.6em 0 rgba(30, 140, 209, 0.2), inset -10.6em 0 0 rgba(30, 140, 209, 0.2), inset 0 -10.6em 0 rgba(30, 140, 209, 0.2); -webkit-transition: box-shadow 0.75s; -moz-transition: box-shadow 0.75s; transition: box-shadow 0.75s; }
+        .circle:after { -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); transform: rotate(45deg); }
+        .circle div { color: rgba(189, 185, 199, 0); font-size: 20px; width: 260px; height: 260px; line-height: 260px; text-align: center; text-transform: uppercase; -webkit-transition: color 0.8s ease-in-out; -moz-transition: color 0.8s ease-in-out; transition: color 0.8s ease-in-out; }
+        .circle:hover:before, .circle:hover:after { box-shadow: inset 0.86em 0 0 rgba(255, 0, 0, 0.5), inset 0 0.86em 0 rgba(252, 150, 0, 0.5), inset -0.86em 0 0 rgba(0, 255, 0, 0.5), inset 0 -0.86em 0 rgba(0, 150, 255, 0.5); }
+        .circle:before, .circle:after { border-radius: 100%; content: ""; position: absolute; top: 0; left: 0; width: inherit; height: inherit; box-shadow: inset 10.6em 0 0 rgba(30, 140, 209, 0.2), inset 0 10.6em 0 rgba(30, 140, 209, 0.2), inset -10.6em 0 0 rgba(30, 140, 209, 0.2), inset 0 -10.6em 0 rgba(30, 140, 209, 0.2); -webkit-transition: box-shadow 0.75s; -moz-transition: box-shadow 0.75s; transition: box-shadow 0.75s; }
+        .circle:hover div { color: rgba(189, 185, 199, 1); }
+        .copyright {padding-top: 100px; text-align: center;font-family: punctuation, PingFangSC-Regular, "Microsoft YaHei", "微软雅黑";}
+        .copyright a { color: #000; text-decoration: none; padding-bottom: 2px;}
+        .copyright a:hover {border-bottom: dashed 1px #000;}
+    </style>
+</head>
+
+<body>
+    <div class="title">
+        <h3 class="b">伪元素动画</h3>
+        <p>移入鼠标，感受移入之前与移入之后的变化。</p>
+    </div>
+    <div class="circle">
+        <div>Hello Wrold</div>
+    </div>
+    <div class="copyright"></div>
+</body>
+
+</html>
