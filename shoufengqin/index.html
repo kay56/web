@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>仿360图片首页手风琴</title>
+    <style>
+        * { margin: 0px; padding: 0px; }
+        body { background-color: #ccc; }
+        ul { list-style: none; }
+        .box { width: 840px; height: 300px; overflow: hidden; position: relative; margin: 100px auto; }
+        .box li { width: 110px; height: 100%; overflow: hidden; position: absolute; }
+        .box li img { width: 500px; position: absolute; left: 50%; margin-left: -250px; }
+        .box .active { width: 400px; } 
+    </style>
+</head>
+
+<body>
+    <ul class="box">
+        <li class="active"><img src="images/1.jpg" alt=""></li>
+        <li><img src="images/2.jpg" alt=""></li>
+        <li><img src="images/3.jpg" alt=""></li>
+        <li><img src="images/4.jpg" alt=""></li>
+        <li><img src="images/5.jpg" alt=""></li>
+    </ul>
+    
+    <script src="move.js"></script>
+    <script>
+        var oBox = document.querySelector('.box');
+        var aLi = oBox.querySelectorAll('li');
+        var aImg = document.querySelectorAll('img');
+        var min = 110, max = 400;
+        
+        
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].style.left = max + (i-1) * min + 'px'; 
+        }
+        aLi[0].style.left = 0;
+        
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].index = i;
+            aLi[i].onmouseover = function (){
+                for(var i=0;i<aLi.length;i++){
+                    
+                    if(i<this.index){
+//                        aLi[i].style.left = i * min + 'px';
+                        move(aLi[i],{
+                            left: i * min,
+                            width: min
+                        },{
+                            type: Tween.Quad.easeIn,
+                            time:15
+                        })
+                    }
+                    else{
+//                        aLi[i].style.left = max + (i - 1) * min  + 'px';
+                        move(aLi[i],{
+                            left: max + (i - 1) * min,
+                            width: min
+                        },{
+                            type: Tween.Quad.easeIn,
+                            time:15
+                        })
+                    }
+                    if(i==this.index){
+                        move(aLi[i],{
+                            left: i * min,
+                            width: max 
+                        },{
+                            type: Tween.Quad.easeIn,
+                            time:15
+                        })
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

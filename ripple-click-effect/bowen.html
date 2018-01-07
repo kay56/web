@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>波纹切换</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        body { background: url('b1.png') no-repeat center center fixed; background-size: cover; }
+        h1 { font: normal 32px/32px punctuation, PingFangSC-Regular, "Microsoft YaHei", "微软雅黑"; color: white; text-align: center; padding: 85px 100px; }
+        /*导航*/
+        ul { background: white; border-top: 6px solid hsl(180, 40%, 60%); width: 200px; margin: 0 auto; }
+        ul li { list-style-type: none;    /*列表项的相对定位以及溢出隐藏以包含溢出的纹波*/ position: relative; overflow: hidden; }
+        ul li a { font: normal 14px/28px Montserrat; color: hsl(180, 40%, 40%); display: block; padding: 10px 15px; text-decoration: none; cursor: pointer; user-select: none; position: relative; }
+        .ink { display: block; position: absolute; background: hsl(180, 40%, 80%); border-radius: 100%; transform: scale(0); }
+
+        /*animation */
+        .ink.animate { animation: ripple 0.65s linear; }
+        @keyframes ripple {
+            /*将元素缩放到250％，以安全地覆盖整个链接并将其淡出*/
+            100% { opacity: 0; transform: scale(2.5); }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CSS3+jq 点击波纹导航</h1>
+    <ul>
+        <li><a>导航</a></li>
+        <li><a>我的账户</a></li>
+        <li><a>消息列表</a></li>
+        <li><a>聊天室</a></li>
+        <li><a>设置</a></li>
+        <li><a>登出</a></li>
+    </ul>
+
+    <!-- jQuery -->
+    <script src="jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script>
+        var parent, ink, d, x, y;
+        $("ul li a").click(function(e){
+            parent = $(this).parent();
+            //ink元如如果不存在
+            if(parent.find(".ink").length == 0)
+                parent.prepend("<span class='ink'></span>");
+                
+            ink = parent.find(".ink");
+            //快速双击停止上一个动画
+            ink.removeClass("animate");
+            
+            //设置.ink的大小
+            if(!ink.height() && !ink.width())
+            {
+                //使用父级的宽度或高度，以较大的直径作为一个圆，可以覆盖整个元素。
+                d = Math.max(parent.outerWidth(), parent.outerHeight());
+                ink.css({height: d, width: d});
+            }
+            
+            //获取点击坐标
+            //logic = 页面点击左边 - 父级位置 - 自身高度/宽度的一半，以使其从中心可控;
+            x = e.pageX - parent.offset().left - ink.width()/2;
+            y = e.pageY - parent.offset().top - ink.height()/2;
+            
+            //设置位置并添加类.animate
+            ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+        })
+    </script>
+</body>
+
+</html>

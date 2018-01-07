@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>canvas下雪效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: #6b92b9;
+        }
+        
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>   
+    <script>
+        window.onload = function() {
+            //获取canvas
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            //初始化画布尺寸
+            var W = window.innerWidth;
+            var H = window.innerHeight;
+            canvas.width = W;
+            canvas.height = H;
+
+            //雪花数量
+            var mp = 200; //最大的雪花大小
+            var particles = [];
+            for (var i = 0; i < mp; i++) {
+                particles.push({
+                    x: Math.random() * W, //x坐标
+                    y: Math.random() * H, //y坐标
+                    r: Math.random() * 4 + 1, //圆角
+                    d: Math.random() * mp //密度
+                })
+            }
+
+            //让画布落雪
+            function draw() {
+                //清除画布
+                ctx.clearRect(0, 0, W, H);
+                //颜色
+                ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                //画
+                ctx.beginPath();
+                for (var i = 0; i < mp; i++) {
+                    var p = particles[i];
+                    ctx.moveTo(p.x, p.y);
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+                }
+                ctx.fill();
+                update();
+            }
+
+            //移动雪花函数
+            //正弦和余弦函数将被应用于其雪花片的垂直和水平运动
+            var angle = 0;
+
+            function update() {
+                angle += 0.01;
+                for (var i = 0; i < mp; i++) {
+                    var p = particles[i];
+                    //更新X和Y坐标
+                    //我们将向cos函数添加1，以防止负值导致碎片向上移动
+                    //每个颗粒具有其自身的密度，其可用于使每个片的向下移动不同
+                    //让它更加随机的添加在半径
+                    p.y += Math.cos(angle + p.d) + 1 + p.r / 2;
+                    p.x += Math.sin(angle) * 2;
+
+                    //退出时从上面出碎片
+                    //让片从左边和右边进入。
+                    if (p.x > W + 5 || p.x < -5 || p.y > H) {
+                        if (i % 3 > 0) //66.67% of the flakes
+                        {
+                            particles[i] = {
+                                x: Math.random() * W,
+                                y: -10,
+                                r: p.r,
+                                d: p.d
+                            };
+                        } else {
+                            //如果雪花从右侧退出
+                            if (Math.sin(angle) > 0) {
+                                //从左侧进入
+                                particles[i] = {
+                                    x: -5,
+                                    y: Math.random() * H,
+                                    r: p.r,
+                                    d: p.d
+                                };
+                            } else {
+                                //从右侧进入
+                                particles[i] = {
+                                    x: W + 5,
+                                    y: Math.random() * H,
+                                    r: p.r,
+                                    d: p.d
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            setInterval(draw, 33);
+        }
+    </script>
+
+</body>
+
+</html>
