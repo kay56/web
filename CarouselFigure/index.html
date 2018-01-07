@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>UI中国焦点图</title>
+    <meta name="robots" content="all">
+    <link rel="stylesheet" href="common.css" type="text/css">
+
+    <style>
+        * { margin: 0; padding: 0; list-style: none; }
+        .box { width: 1200px; margin: 30px auto; position: relative; overflow: hidden; height: 540px; }
+        .tab { position: absolute; left: 0; top: 0; height: 100%; }
+        .tab li { float: left; width: 1200px; height: 100%; position: absolute; left: 0; top: 0; }
+        .tab .one { width: 120px; height: 100%; float: left; }
+        .tab .two { height: 108px; background-repeat: no-repeat; background-color: rgba(255, 0, 0, .4); }
+        .tab img { width: 100%; height: 100%; }
+        .tab .active { z-index: 2; }
+        .num { position: absolute; left: 0; bottom: 20px; width: 100%; z-index: 20; text-align: center; }
+        .num a { display: inline-block; height: 8px; width: 20px; background-color: rgba(255, 255, 255, .4); transition: .25s ease-out; }
+        .num .active { background-color: rgba(255, 255, 255, 1); }
+        .prev, .next { position: absolute; top: 50%; width: 60px; height: 60px; margin-top: -30px; background-color: rgba(255, 255, 255, .4); z-index: 4; text-align: center; line-height: 60px; font-size: 20pt; text-decoration: none; color: #000; font-weight: bold; }
+        .prev { left: 0; }
+        .next { right: 0; }
+        .copyright { text-align: center;font-family: punctuation, PingFangSC-Regular, "Microsoft YaHei", "微软雅黑";}
+        .copyright a { color: #000; text-decoration: none; padding-bottom: 2px;}
+        .copyright a:hover {border-bottom: dashed 1px #000;}
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box">
+        <ul class="tab">
+            <li class="active"></li>
+        </ul>
+        <div class="num" id="num">
+            <a href="javascript:;" class="active"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+        </div>
+        <a href="javascript:;" class="prev">&lt;</a>
+        <a href="javascript:;" class="next">&gt;</a>
+    </div>
+    <div class="copyright"></div>
+    <script src="./js/move.js"></script>
+    <script>
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+        function $$(obj, sName) {
+            return obj.getElementsByClassName(sName);
+        }
+
+
+        var oBox = $('box'),
+            oNext = $$(oBox, 'next')[0],
+            oPrev = $$(oBox, 'prev')[0],
+            bw = oBox.offsetWidth,
+            bh = oBox.offsetHeight,
+            oLi = oBox.getElementsByTagName('li')[0],
+            aNum = $('num').getElementsByTagName('a');
+        var n = 1;
+        //把img 转成背景
+
+        oLi.style.background = 'url(images/' + n + '.jpg)';
+
+        var arr = [];
+        for (var i = 0; i < 10; i++) {
+            arr.push(i);
+        }
+        
+        function tab(a){
+            oLi.innerHTML = '';
+            for (var i = 0; i < 10; i++) {
+                var oDiv = document.createElement('div');
+                //                oDiv.style.backgroundImage = 'url(img/'+n+'.jpg)';
+                oDiv.className = 'one';
+                oLi.appendChild(oDiv);
+                for (var j = 0; j < 5; j++) {
+                    var newDiv = document.createElement('div');
+                    newDiv.className = 'two';
+                    newDiv.style.backgroundImage = 'url(images/' + n + '.jpg)';
+
+                    oDiv.appendChild(newDiv);
+
+                    newDiv.style.backgroundPosition = -oDiv.offsetLeft + 'px ' + -newDiv.offsetTop + 'px';
+                }
+
+            }
+            //切换class
+            for(var i=0;i<aNum.length;i++){
+                aNum[i].className = '';
+            }
+            //判断是左侧还是右侧
+            if(a<0){
+                n--;
+                if(n==0) n=aNum.length;
+            }
+            else{
+                n++;
+                if(n==aNum.length+1) n=1;
+            }
+            aNum[n-1].className = 'active';
+            //更换背景
+            oLi.style.background = 'url(images/' + n + '.jpg)';
+
+            var aDiv = oLi.getElementsByClassName('one');
+            //添加动画
+            for (var i = 0; i < 10; i++) {
+                (function(i) {
+                    setTimeout(function() {
+                        for (var j = 4; j >= 0; j--) {
+                            (function(j) {
+                                var _i = i;
+                                move(aDiv[_i].getElementsByTagName('div')[j], {
+                                    opacity: 0
+                                }, {
+                                    time: 50/(j*j*j+1)
+                                })
+                            })(j)
+                        }
+                    }, Math.random() * 200)
+                })(i)
+            }
+        }
+        
+
+        oNext.onclick = function() {
+            tab(2);
+        }
+        oPrev.onclick = function() {
+            tab(-2);
+        }
+    </script>
+</body>
+
+</html>
