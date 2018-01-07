@@ -1,0 +1,41 @@
+@charset "utf-8";
+body { background: url(../img/beige_paper.png) 0 0 repeat; font-family: punctuation, PingFangSC-Regular, "Microsoft YaHei", "微软雅黑"; }
+.clearfix:after { content: ""; display: block; clear: both; }
+.clearfix { zoom: 1; }
+@font-face { font-family: 'iconfont'; src: url('../font/iconfont.eot'); src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), url('../font/iconfont.woff') format('woff'), url('../font/iconfont.ttf') format('truetype'), url('../font/iconfont.svg#iconfont') format('svg'); }
+.iconfont { font-family: "iconfont" !important; font-style: normal; -webkit-font-smoothing: antialiased; -webkit-text-stroke-width: 0.2px; -moz-osx-font-smoothing: grayscale; }
+.title { text-align: center; font-size: 14px; padding: 30px 0; font-size: 1.5em; color: #000; text-shadow: 1px 1px 0 rgba(255, 255, 255, .4); line-height: 1.2; }
+.title span { font-size: 12px; }
+.tablink { text-align: center; font-size: 12px; }
+.tablink a { display: inline-block; height: 24px; line-height: 24px; padding: 0 1em; background-color: #fff; box-shadow: 2px 2px 3px rgba(0, 0, 0, .3); color: #000; margin: 0 4px; }
+.tablink .active { background-color: #0099c5; color: #FFF; }
+.link_box { width: 1090px; margin: 30px auto; }
+.case_item { width: 200px; height: 300px; box-shadow: 2px 2px 3px rgba(0, 0, 0, .3); margin: 4px; position: relative; float: left; border: 5px solid #fff; box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); transition: all .3s linear; }
+.case_item a { display: block; color: #000; height: 100%; background-color: #fff; position: relative; transition: .3s ease-in-out; overflow: hidden; }
+.icon { height: 140px; font-size: 70px; text-align: center; line-height: 140px; transition: .3s ease-in-out; color: #a2a2a2; }
+.case_text { padding: 10px 10px 0; text-align: center; }
+.case_text p { transition: .3s linear; font-size: 12px; }
+.case_text p:nth-child(1) { font-size: 22px; margin-bottom: 1em; }
+.case_text p:nth-child(2) { font-size: 14px; color: #5c5c5c; }
+
+/*hover*/
+.case_item a:hover { background-color: #cea3ff; }
+.case_item a:hover .icon { opacity: .8; transform: scale(1.4); color: #4c03a2; -webkit-animation: move_bottom .3s ease-in-out; animation: move_bottom .3s ease-in-out; }
+.case_item a:hover .case_text p:nth-child(1) { -webkit-animation: smallToBig .3s ease-in-out; animation: smallToBig .3s ease-in-out; color: #4c03a2; }
+.case_item a:hover .case_text p:nth-child(2) { -webkit-animation: move_bottom .3s ease-in-out; animation: move_bottom .3s ease-in-out; }
+@-webkit-keyframes smallToBig {
+    from { -webkit-transform: scale(0.1); }
+    to { -webkit-transform: scale(1); }
+}
+@keyframes smallToBig {
+    from { transform: scale(0.1); }
+    to { transform: scale(1); }
+}
+@-webkit-keyframes move_bottom {
+    from { -webkit-transform: translateY(200%); }
+    to { -webkit-transform: translateY(0%); }
+}
+@keyframes move_bottom {
+    from { transform: translateY(200%); }
+    to { transform: translateY(0%); }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>动态波浪文字动画</title>
+    <meta id="viewport" name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="./css/reset.css" type="text/css">
+    <link rel="stylesheet" href="./css/common.css" type="text/css">
+</head>
+
+<body>
+    <div class="box" id="box">
+        <h4>flip</h4>
+        <p class="text flip">A man, like a watch, is to be valued by this manner of going.</p>
+        <h4>slow</h4>
+        <p class="text slow">Friendship is both a source of pleasure and a component of good health.</p>
+        <h4>bounce</h4>
+        <p class="text bounce">Difficult the first time, easy the second.</p>
+        <h4>vibe</h4>
+        <p class="text vibe">Experience is what you get when you don't get what you want.</p>
+        <br>
+        <br>
+        <br>
+        <p class="text flip">Moyu-edu.com</p>
+    </div>
+    <script>
+        var aP = document.querySelectorAll('p');
+        var arr = [];
+        
+        for(var i=0;i<aP.length;i++){
+            arr[i] = aP[i].innerHTML;
+            aP[i].innerHTML = '';
+            for(var j=0;j<arr[i].length;j++){
+                aP[i].innerHTML += '<span>'+arr[i][j]+'</span>';
+            }
+        }        
+    </script>
+</body>
+
+</html>

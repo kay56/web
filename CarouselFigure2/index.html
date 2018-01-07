@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图2</title>
+    <meta name="robots" content="all">
+    <link rel="stylesheet" href="./css/common.css" type="text/css">
+</head>
+<body>
+    <div class="box" id="box">
+        <ul class="tab">
+            <li class="d1" id="d1"><img src="images/1.jpg"></li>
+            <li class="d2" id="d2"><img src="images/2.jpg"></li>
+            <li class="d3" id="d3"><img src="images/3.jpg"></li>
+            <li class="d4" id="d4"><img src="images/4.jpg"></li>
+            <li class="d5" id="d5"><img src="images/5.jpg"></li>
+        </ul>
+        <div class="num">
+            <a href="javascript:;" class="active"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+        </div>
+        <a href="javascript:;" class="prev"></a>
+        <a href="javascript:;" class="next"></a>
+    </div>    
+    <script src="./js/move.js"></script>
+    <script>
+        function $(id) { return document.getElementById(id); }
+        function $$(obj, sName) { return obj.getElementsByClassName(sName); }
+        function getStyle(obj, attr) {  return (obj.currentStyle || getComputedStyle(obj, false))[attr]; }
+        var oBox = $('box'),
+            oUl = $$(oBox, 'tab')[0],
+            aLi = oUl.getElementsByTagName('li'),
+            oNum = $$(oBox, 'num')[0],
+            aNum = oNum.getElementsByTagName('a'),
+            oPrev = $$(oBox, 'prev')[0],
+            oNext = $$(oBox, 'next')[0],
+            now = 0,
+            ow = aLi[0].offsetWidth;
+        var index = 3;
+        
+        aLi[1].onclick = function(){
+            arr.push(arr.shift());
+            changeEle();
+        }
+        
+        aLi[3].onclick = function(){
+            arr.unshift(arr.pop());
+            changeEle();
+        }
+        
+        //存储
+        var arr = [];
+        for (var i = 0; i < aLi.length; i++) {
+            arr[i] = {
+                l: aLi[i].offsetLeft,
+                t: aLi[i].offsetTop,
+                w: aLi[i].offsetWidth,
+                h: aLi[i].offsetHeight,
+                z: getStyle(aLi[i], 'z-index'),
+                o: getStyle(aLi[i], 'opacity'),
+                fn: aLi[i].onclick,
+                num: i
+            }
+        }
+        //改变方法
+        function changeEle() {
+            for (var i = 0; i < aLi.length; i++) {
+                move(aLi[i], {
+                    left: arr[i].l,
+                    top: arr[i].t,
+                    width: arr[i].w,
+                    height: arr[i].h,
+                    opacity: arr[i].o
+                }, {
+                    time: 10
+                });
+                aLi[i].style.zIndex = arr[i].z;
+                aLi[i].onclick = arr[i].fn;
+            }
+        }
+        
+        oNext.onclick = function() {
+            arr.unshift(arr.pop());
+            changeEle();
+        }
+        oPrev.onclick = function() {
+            arr.push(arr.shift());
+            changeEle();
+        }
+    </script>
+</body>
+</html>
